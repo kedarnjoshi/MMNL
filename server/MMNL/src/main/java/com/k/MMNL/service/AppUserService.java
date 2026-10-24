@@ -22,4 +22,12 @@ public class AppUserService {
         u.grantSuperAdmin();   // changes the Java object only
         // no save() call needed
     }
+
+    public AppUser addUser(AppUser appUser) {
+        return appUserRepository.save(appUser);
+    }
+
+    public boolean containsUser(String sub) {
+        return appUserRepository.existsByGoogleSubject(sub);
+    }
 }

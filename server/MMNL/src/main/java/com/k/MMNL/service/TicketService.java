@@ -1,13 +1,15 @@
 package com.k.MMNL.service;
 
-import com.k.MMNL.repository.TicketRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClient;
 
 @Service
 public class TicketService {
-    private final TicketRepository ticketRepository;
+    private final RestClient client;
 
-    public TicketService(TicketRepository ticketRepository) {
-        this.ticketRepository = ticketRepository;
+    public TicketService(RestClient client) {
+        this.client = client;
     }
+
+
 }

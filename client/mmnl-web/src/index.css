@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #1b2430;
+  --color-ink-soft: #4a5565;
+  --color-saffron: #ff9933;
+  --color-saffron-deep: #b85600;
+  --color-haldi: #fff1dd;
+  --color-kumkum: #a82a2a;
+  --color-tulsi: #2f6f4e;
+  --color-indigo: #3c5a8a;
+  --color-mist: #f3f4f7;
+  --color-line: #dce0e6;
+  --font-display: "Young Serif", Georgia, serif;
+  --font-sans: "Mukta", system-ui, sans-serif;
+}
+
+@layer base {
+  body { @apply bg-mist text-ink font-sans antialiased text-[17px] leading-relaxed; }
+  h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.2; }
+  :focus-visible { outline: 3px solid var(--color-saffron-deep); outline-offset: 2px; }
+  a { @apply text-saffron-deep; }
+}
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2 font-semibold transition cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed no-underline; }
+  .btn-primary { @apply bg-saffron text-ink hover:bg-[#f28a1f]; }
+  .btn-dark { @apply bg-ink text-white hover:bg-[#2a3748]; }
+  .btn-outline { @apply border border-ink/30 text-ink hover:bg-ink/5; }
+  .btn-danger { @apply bg-kumkum text-white hover:bg-[#8e2222]; }
+  .btn-sm { @apply px-3 py-1 text-sm; }
+  .card { @apply bg-white border border-line rounded-lg p-5; }
+  .input { @apply w-full rounded-md border border-line bg-white px-3 py-2 text-ink; }
+  .label { @apply block text-sm font-semibold mb-1; }
+  .tbl { @apply w-full text-left text-[15px]; }
+  .tbl th { @apply font-semibold text-ink-soft py-2 px-3 border-b border-line whitespace-nowrap; }
+  .tbl td { @apply py-2 px-3 border-b border-line/60 align-top; }
+  .toran {
+    height: 14px;
+    background-repeat: repeat-x;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='14'%3E%3Cpath d='M0 0h28L14 14z' fill='%23FF9933'/%3E%3Cpath d='M28 0h28L42 14z' fill='%23A82A2A'/%3E%3C/svg%3E");
+  }
+}
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

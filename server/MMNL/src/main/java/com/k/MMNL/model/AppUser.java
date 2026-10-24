@@ -19,7 +19,7 @@ public class AppUser {
     @Column(nullable = false, unique = true)
     private String email;                       // always lowercased
 
-    @Column(name = "google_subject", nullable = false, unique = true)
+    @Column(name = "google_subject", unique = true)
     private String googleSubject;               // Google's stable "sub" claim
 
     @Column(name = "full_name", nullable = false)
