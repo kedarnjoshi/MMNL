@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class BaseController {
 
-    @Value("${app.frontend-url:http://localhost:5173}")
+    @Value("${app.frontend-url}")
     private String frontendUrl;
 
 
