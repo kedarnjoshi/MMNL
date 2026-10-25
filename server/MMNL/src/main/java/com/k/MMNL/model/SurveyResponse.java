@@ -17,8 +17,8 @@ public class SurveyResponse {
     @Column(name = "survey_id", nullable = false)
     private UUID surveyId;
 
-    @Column(name = "buyer_email", nullable = false)
-    private String buyerEmail;
+    @Column(name = "google_sub", nullable = false)
+    private String googleSub;
 
     @Column(name = "overall")
     private Integer overall;
@@ -40,15 +40,15 @@ public class SurveyResponse {
 
     protected SurveyResponse() {}                      // required by JPA
 
-    public SurveyResponse(UUID surveyId, String buyerEmail) {
+    public SurveyResponse(UUID surveyId, String googleSub) {
         this.surveyId = surveyId;
-        this.buyerEmail = buyerEmail;
+        this.googleSub = googleSub;
     }
 
     // getters only (no public setters)
     public UUID getId() { return id; }
     public UUID getSurveyId() { return surveyId; }
-    public String getBuyerEmail() { return buyerEmail; }
+    public String getGoogleSub() { return googleSub; }
     public Integer getOverall() { return overall; }
     public Integer getFood() { return food; }
     public Integer getCultural() { return cultural; }

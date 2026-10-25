@@ -1,12 +1,14 @@
 package com.k.MMNL.controller;
 
+import com.k.MMNL.dto.EventSummary;
 import com.k.MMNL.dto.SurveyDTO;
 import com.k.MMNL.dto.TicketDTO;
 import com.k.MMNL.dto.UserDTO;
 import com.k.MMNL.model.AppUser;
+import com.k.MMNL.model.Event;
 import com.k.MMNL.model.LoggedInUser;
-import com.k.MMNL.service.AppUserService;
-import com.k.MMNL.service.TicketService;
+import com.k.MMNL.model.Survey;
+import com.k.MMNL.service.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
@@ -28,11 +30,24 @@ public class MeController {
 
     private final String superAdminEmail;
     private final TicketService ticketService;
+    private final SurveyService surveyService;
+    private final SurveyResponseService surveyResponseService;
+    private final EventService eventService;
 
-    public MeController(AppUserService appUserService, @Value("${app.super-admin-email}") String superAdminEmail, TicketService ticketService) {
+    public MeController(
+            AppUserService appUserService,
+            @Value("${app.super-admin-email}") String superAdminEmail,
+            TicketService ticketService,
+            SurveyService surveyService,
+            SurveyResponseService surveyResponseService,
+            EventService eventService
+    ) {
         this.appUserService = appUserService;
         this.superAdminEmail = superAdminEmail;
         this.ticketService = ticketService;
+        this.surveyService = surveyService;
+        this.surveyResponseService = surveyResponseService;
+        this.eventService = eventService;
     }
 
     @GetMapping("/api/me")
@@ -94,6 +109,20 @@ public class MeController {
                 .filter(t -> t.status().equalsIgnoreCase("CHECKED_IN"))
                 .map(TicketDTO::eventId)
                 .collect(Collectors.toSet());
-        return ResponseEntity.ok(List.of());
+        List<Survey> surveys = surveyService.getAllSurveysByStatusAndEventId("OPEN", checkedInEvents);
+        List<Boolean> isSubmitted = surveys
+                .stream()
+                .map(
+                        a -> surveyResponseService.isSubmitted(a, lu.getSub()))
+                .toList();
+        List<EventSummary> events = checkedInEvents
+                .stream()
+                .map(eventService::getEventById)
+                .toList();
+        return ResponseEntity.ok(SurveyDTO.from(
+                surveys,
+                events,
+                isSubmitted
+        ));
     }
 }
