@@ -30,4 +30,8 @@ public class AppUserService {
     public boolean containsUser(String sub) {
         return appUserRepository.existsByGoogleSubject(sub);
     }
+
+    public AppUser getUser(String sub) {
+        return appUserRepository.findByGoogleSubject(sub).orElseThrow();
+    }
 }

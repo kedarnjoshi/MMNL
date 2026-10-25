@@ -15,7 +15,7 @@ public class RoleAssignment {
     private UUID id;
 
     @Column(name = "event_id", nullable = false)
-    private UUID eventId;
+    private String eventId;
 
     @Column(name = "user_id")
     private UUID userId;
@@ -43,7 +43,7 @@ public class RoleAssignment {
 
     protected RoleAssignment() {}                      // required by JPA
 
-    public RoleAssignment(UUID eventId, String level, String status) {
+    public RoleAssignment(String eventId, String level, String status) {
         this.eventId = eventId;
         this.level = level;
         this.status = status;
@@ -51,7 +51,7 @@ public class RoleAssignment {
 
     // getters only (no public setters)
     public UUID getId() { return id; }
-    public UUID getEventId() { return eventId; }
+    public String getEventId() { return eventId; }
     public UUID getUserId() { return userId; }
     public String getPendingEmail() { return pendingEmail; }
     public String getDepartment() { return department; }

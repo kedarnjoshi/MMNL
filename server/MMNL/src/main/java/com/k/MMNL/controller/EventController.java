@@ -4,6 +4,7 @@ import com.k.MMNL.dto.EventSummary;
 import com.k.MMNL.dto.ticketTailor.TtEvent;
 import com.k.MMNL.service.EventService;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +27,11 @@ public class EventController {
     @GetMapping("")
     public List<EventSummary> getEvents() {
         return eventService.listEvents();
+    }
+
+    @GetMapping("/{eventId}")
+    public EventSummary getEvent(@PathVariable String eventId) {
+        return eventService.getEventById(eventId);
     }
 
 }
