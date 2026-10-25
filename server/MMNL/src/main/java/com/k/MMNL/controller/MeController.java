@@ -1,6 +1,7 @@
 package com.k.MMNL.controller;
 
 import com.k.MMNL.dto.TicketDTO;
+import com.k.MMNL.dto.UserDTO;
 import com.k.MMNL.model.AppUser;
 import com.k.MMNL.model.LoggedInUser;
 import com.k.MMNL.service.AppUserService;
@@ -32,7 +33,7 @@ public class MeController {
     }
 
     @GetMapping("/api/me")
-    public ResponseEntity<Map<String, String>> me(@AuthenticationPrincipal OAuth2User user) {
+    public ResponseEntity<UserDTO> me(@AuthenticationPrincipal OAuth2User user) {
         if  (user == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -45,17 +46,17 @@ public class MeController {
 
         LoggedInUser loggedInUser = new LoggedInUser(user);
 
-
+        AppUser u;
         if (!appUserService.containsUser(loggedInUser.getSub())) {
-            AppUser u = new AppUser(email, sub, name, picture);
+            u = new AppUser(email, sub, name, picture);
             appUserService.addUser(u);
 
             if (verified && u.getEmail().trim().equals(superAdminEmail)) appUserService.grantSuperAdmin(u.getId());
         }
-        return ResponseEntity.ok(Map.of(
-                "firstName", loggedInUser.getName(),
-                "email", loggedInUser.getEmail()
-        ));
+        else {
+            u = appUserService.getUser(loggedInUser.getSub());
+        }
+        return ResponseEntity.ok(UserDTO.from(u));
     }
 
     @GetMapping("/api/v1/me/tickets")
@@ -73,4 +74,6 @@ public class MeController {
                 .body(ticketService.getTickets(lu))
                 ;
     }
+
+    
 }

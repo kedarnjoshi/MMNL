@@ -15,23 +15,20 @@ public class Survey {
     private UUID id;
 
     @Column(name = "event_id", nullable = false)
-    private UUID eventId;
+    private String eventId;
 
     @Column(name = "status", nullable = false)
     private String status;
 
-    @Version
-    private long version;
-
     protected Survey() {}                      // required by JPA
 
-    public Survey(UUID eventId, String status) {
+    public Survey(String eventId, String status) {
         this.eventId = eventId;
         this.status = status;
     }
 
     // getters only (no public setters)
     public UUID getId() { return id; }
-    public UUID getEventId() { return eventId; }
+    public String getEventId() { return eventId; }
     public String getStatus() { return status; }
 }
