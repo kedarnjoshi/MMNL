@@ -1,5 +1,6 @@
 package com.k.MMNL.controller;
 
+import com.k.MMNL.dto.SurveyDTO;
 import com.k.MMNL.dto.TicketDTO;
 import com.k.MMNL.dto.UserDTO;
 import com.k.MMNL.model.AppUser;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 public class MeController {
@@ -75,5 +78,22 @@ public class MeController {
                 ;
     }
 
-    
+    @GetMapping("/api/v1/me/surveys")
+    public ResponseEntity<List<SurveyDTO>> getSurveys(@AuthenticationPrincipal OAuth2User user) {
+        if  (user == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        LoggedInUser lu = new LoggedInUser(user);
+        if (!lu.isVerified()) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
+
+        Set<String> checkedInEvents = ticketService
+                .getTickets(lu)
+                .stream()
+                .filter(t -> t.status().equalsIgnoreCase("CHECKED_IN"))
+                .map(TicketDTO::eventId)
+                .collect(Collectors.toSet());
+        return ResponseEntity.ok(List.of());
+    }
 }
