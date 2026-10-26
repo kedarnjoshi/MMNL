@@ -13,7 +13,8 @@ public record EventSummary(
         String bannerUrl,
         String ticketTailorUrl,
         Instant registrationDeadline,
-        boolean registrationOpen
+        boolean registrationOpen,
+        String status
 ) {
     public static EventSummary from(TtEvent e) {
         return new EventSummary(
@@ -25,7 +26,8 @@ public record EventSummary(
                 e.images() != null ? e.images().header() : null,
                 e.url(),
                 e.ticketsUnavailableAt() != null ? Instant.ofEpochSecond(e.ticketsUnavailableAt()) : null,
-                Boolean.TRUE.equals(e.ticketsAvailable())
+                Boolean.TRUE.equals(e.ticketsAvailable()),
+                e.status()
         );
     }
 }

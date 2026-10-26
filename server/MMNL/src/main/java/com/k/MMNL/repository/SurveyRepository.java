@@ -8,4 +8,5 @@ import java.util.UUID;
 
 public interface SurveyRepository extends JpaRepository<Survey, UUID> {
     List<Survey> findAllByStatus(String status);
+    Survey findSurveyById(UUID id);
 }

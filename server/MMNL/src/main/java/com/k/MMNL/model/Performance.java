@@ -15,10 +15,10 @@ public class Performance {
     private UUID id;
 
     @Column(name = "event_id", nullable = false)
-    private UUID eventId;
+    private String eventId;
 
     @Column(name = "submitted_by", nullable = false)
-    private UUID submittedBy;
+    private String submittedByGoogleSub;
 
     @Column(name = "group_name", nullable = false)
     private String groupName;
@@ -49,18 +49,17 @@ public class Performance {
 
     protected Performance() {}                      // required by JPA
 
-    public Performance(UUID eventId, UUID submittedBy, String groupName, PerformanceType type, String status) {
+    public Performance(String eventId, String submittedByGoogleSub, String groupName, PerformanceType type, String status) {
         this.eventId = eventId;
-        this.submittedBy = submittedBy;
+        this.submittedByGoogleSub = submittedByGoogleSub;
         this.groupName = groupName;
         this.type = type;
         this.status = status;
     }
 
-    // getters only (no public setters)
     public UUID getId() { return id; }
-    public UUID getEventId() { return eventId; }
-    public UUID getSubmittedBy() { return submittedBy; }
+    public String getEventId() { return eventId; }
+    public String getSubmittedByGoogleSub() { return submittedByGoogleSub; }
     public String getGroupName() { return groupName; }
     public PerformanceType getType() { return type; }
     public Integer getDurationMinutes() { return durationMinutes; }

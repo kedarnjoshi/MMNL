@@ -93,36 +93,5 @@ public class MeController {
                 ;
     }
 
-    @GetMapping("/api/v1/me/surveys")
-    public ResponseEntity<List<SurveyDTO>> getSurveys(@AuthenticationPrincipal OAuth2User user) {
-        if  (user == null) {
-            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
-        LoggedInUser lu = new LoggedInUser(user);
-        if (!lu.isVerified()) {
-            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-        }
 
-        Set<String> checkedInEvents = ticketService
-                .getTickets(lu)
-                .stream()
-                .filter(t -> t.status().equalsIgnoreCase("CHECKED_IN"))
-                .map(TicketDTO::eventId)
-                .collect(Collectors.toSet());
-        List<Survey> surveys = surveyService.getAllSurveysByStatusAndEventId("OPEN", checkedInEvents);
-        List<Boolean> isSubmitted = surveys
-                .stream()
-                .map(
-                        a -> surveyResponseService.isSubmitted(a, lu.getSub()))
-                .toList();
-        List<EventSummary> events = checkedInEvents
-                .stream()
-                .map(eventService::getEventById)
-                .toList();
-        return ResponseEntity.ok(SurveyDTO.from(
-                surveys,
-                events,
-                isSubmitted
-        ));
-    }
 }

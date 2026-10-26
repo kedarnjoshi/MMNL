@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 @Service
 public class SurveyService {
@@ -32,5 +33,9 @@ public class SurveyService {
     public List<Survey> getAllSurveysByStatusAndEventId(String status, Set<String> eventIds) {
         List<Survey> surveys = surveyRepository.findAllByStatus(status);
         return surveys.stream().filter(x -> eventIds.contains(x.getEventId().trim())).toList();
+    }
+
+    public Survey findSurveyById(UUID id) {
+        return surveyRepository.findById(id).orElse(null);
     }
 }

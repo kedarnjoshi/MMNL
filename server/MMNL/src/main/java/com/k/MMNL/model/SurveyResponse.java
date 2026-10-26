@@ -1,5 +1,6 @@
 package com.k.MMNL.model;
 
+import com.k.MMNL.dto.requests.SurveyResponseRequest;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 
@@ -54,4 +55,34 @@ public class SurveyResponse {
     public Integer getCultural() { return cultural; }
     public Integer getVenue() { return venue; }
     public String getComment() { return comment; }
+    public void setSurveyId(UUID surveyId) { this.surveyId = surveyId; }
+
+    public SurveyResponse(
+            UUID surveyId,
+            String googleSub,
+            Integer overall,
+            Integer food,
+            Integer cultural,
+            Integer venue,
+            String comment
+    ) {
+        this.surveyId = surveyId;
+        this.googleSub = googleSub;
+        this.overall = overall;
+        this.food = food;
+        this.cultural = cultural;
+        this.venue = venue;
+        this.comment = comment;
+    }
+    public static SurveyResponse from(SurveyResponseRequest request, LoggedInUser user, UUID surveyId) {
+        return new SurveyResponse(
+                surveyId,
+                user.getSub(),
+                request.overall(),
+                request.food(),
+                request.cultural(),
+                request.venue(),
+                request.comment()
+        );
+    }
 }
