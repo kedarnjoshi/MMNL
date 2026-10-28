@@ -39,11 +39,34 @@ public class Participant {
         this.fullName = fullName;
     }
 
-    // getters only (no public setters)
     public UUID getId() { return id; }
     public UUID getPerformanceId() { return performanceId; }
     public String getFullName() { return fullName; }
     public boolean isMinor() { return minor; }
     public String getGuardianName() { return guardianName; }
     public String getGuardianEmail() { return guardianEmail; }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setPerformanceId(UUID performanceId) {
+        this.performanceId = performanceId;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public void setMinor(boolean minor) {
+        this.minor = minor;
+    }
+
+    public void setGuardianName(String guardianName) {
+        this.guardianName = guardianName;
+    }
+
+    public void setGuardianEmail(String guardianEmail) {
+        this.guardianEmail = guardianEmail;
+    }
 }

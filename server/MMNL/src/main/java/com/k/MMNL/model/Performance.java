@@ -24,6 +24,7 @@ public class Performance {
     private String groupName;
 
     @Column(name = "type", nullable = false)
+    @Enumerated(EnumType.STRING)
     private PerformanceType type;
 
     @Column(name = "duration_minutes")
@@ -33,7 +34,8 @@ public class Performance {
     private String description;
 
     @Column(name = "status", nullable = false)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private PerformanceStatus status;
 
     @Column(name = "status_reason")
     private String statusReason;
@@ -49,12 +51,25 @@ public class Performance {
 
     protected Performance() {}                      // required by JPA
 
-    public Performance(String eventId, String submittedByGoogleSub, String groupName, PerformanceType type, String status) {
+    public Performance(String eventId, String submittedByGoogleSub, String groupName, PerformanceType type, PerformanceStatus status) {
         this.eventId = eventId;
         this.submittedByGoogleSub = submittedByGoogleSub;
         this.groupName = groupName;
         this.type = type;
         this.status = status;
+    }
+
+    public Performance(String eventId, String submittedByGoogleSub, String groupName, PerformanceType type, Integer durationMinutes, String description, PerformanceStatus status, String statusReason, Integer lineupPosition, boolean lineupLocked) {
+        this.eventId = eventId;
+        this.submittedByGoogleSub = submittedByGoogleSub;
+        this.groupName = groupName;
+        this.type = type;
+        this.durationMinutes = durationMinutes;
+        this.description = description;
+        this.status = status;
+        this.statusReason = statusReason;
+        this.lineupPosition = lineupPosition;
+        this.lineupLocked = lineupLocked;
     }
 
     public UUID getId() { return id; }
@@ -64,8 +79,12 @@ public class Performance {
     public PerformanceType getType() { return type; }
     public Integer getDurationMinutes() { return durationMinutes; }
     public String getDescription() { return description; }
-    public String getStatus() { return status; }
+    public PerformanceStatus getStatus() { return status; }
     public String getStatusReason() { return statusReason; }
     public Integer getLineupPosition() { return lineupPosition; }
     public boolean isLineupLocked() { return lineupLocked; }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 }
